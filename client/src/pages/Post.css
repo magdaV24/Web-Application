@@ -121,3 +121,31 @@
 .edit-form textarea::-webkit-scrollbar-thumb {
     background-color: var(--accent);
 }
+
+.ask-box{
+    width: 400px;
+    height: 150px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.ask-box button{
+    width: 50px;
+    height: 30px;
+    border: 1px solid var(--light);
+    background-color: transparent;
+    border-radius: 3px;
+    font: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+.group{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
