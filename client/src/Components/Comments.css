@@ -98,6 +98,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-top: 55px;
+    border-top: 1px solid var(--light);
 }
 
 .comment-actions .buttons{
@@ -112,11 +114,12 @@
 .buttons .btns{
     width: 70px;
     height: 30px;
-    background-color: var(--background);
-    border: none;
+    background-color: transparent;
+    border: 3px double var(--dark);
+    color: var(--font);
     outline: none;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: 3px;
+    font-size: 20px;
 }
 
 .buttons .btns:hover{

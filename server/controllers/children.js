@@ -26,3 +26,40 @@ export const getChildren = (req, res) => {
     return res.status(200).json(result);
   });
 }
+
+export const deleteChild = (req, res) => {
+  const id = req.params.id;
+  const q = `UPDATE children SET content = ? WHERE id = ${id}`;
+
+  const content = req.body.content;
+
+  db.query(q, content, (err, result) => {
+    if (err) throw err;
+    res.send("The new values had been sent to the database!");
+  });
+};
+
+export const editChild = (req, res) => {
+  const id = req.params.id;
+  const q = `UPDATE children SET content = ? WHERE id = ${id}`;
+
+  const content = req.body.content;
+
+  db.query(q, content, (err, result) => {
+    if (err) throw err;
+    res.send("The new values had been sent to the database!");
+  });
+};
+
+export const likeDislikeChild = (req, res) => {
+  const id = req.params.id;
+  const q = `UPDATE children SET likes = ?, dislikes = ? WHERE id = ${id}`;
+
+  const likes = req.body.likes;
+  const dislikes = req.body.dislikes;
+
+  db.query(q, [likes, dislikes], (err, result) => {
+    if (err) throw err;
+    res.send("The new values had been sent to the database!");
+  });
+};

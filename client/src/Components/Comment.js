@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import CommentForm from "./CommentForm";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faReply, faThumbsDown, faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Comment({ comment }) {
   const [isReplaying, setIsReplaying] = useState(false);
@@ -25,6 +27,81 @@ export default function Comment({ comment }) {
     };
     fetchChildren();
   }, [parentId]);
+
+  //edit comments
+
+  const [isEditing, setIsEditing] = useState(false)
+
+  const EditBox = ({ comment }) => {
+    const [newContent, setNewContent] = useState(comment.content);
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      if (currentUser.username === comment.createdBy && comment.content !== '[deleted]') {
+        const id = comment.id;
+        if(comment.parentId === null){
+          try {
+            const response = await axios.put(
+              `http://localhost:3001/server/comment/edit/${id}`,
+              {
+                content: newContent,
+              }
+            );
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          try {
+            const response = await axios.put(
+              `http://localhost:3001/server/child/edit/${id}`,
+              {
+                content: newContent,
+              }
+            );
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    };
+
+    return (
+      <form onSubmit={handleSubmit} className='edit-form'>
+        <textarea
+          onChange={(e) => setNewContent(e.target.value)}
+          value={newContent}
+        >{newContent}</textarea>
+        <button>Submit edit</button>
+      </form>
+    );
+  };
+  
+    //deleting comments
+
+    const deleteComment = async (e) => {
+      e.preventDefault();
+      const id = comment.id;
+      if(comment.createdBy === currentUser.username){
+        if(comment.parentId === null){
+          try {
+            const response = axios.put(`http://localhost:3001/server/comment/delete/${id}`, {content: '[deleted]'})
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          try {
+            const response = axios.put(`http://localhost:3001/server/child/delete/${id}`, {content: '[deleted]'})
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    }
+    
   return (
     <>
       <div className="comment-wrapper">
@@ -36,15 +113,16 @@ export default function Comment({ comment }) {
         </div>
         <div className="comment-actions">
           <div className="buttons">
-            <button className="btns">{comment.likes}</button>
-            <button className="btns">{comment.dislikes}</button>
+            <button className="btns" style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}><FontAwesomeIcon icon={faThumbsUp} /><span>{comment.likes}</span></button>
+            <button className="btns" style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}><FontAwesomeIcon icon={faThumbsDown} /><span>{comment.dislikes}</span></button>
             <button className="btns" onClick={() => setIsReplaying((prev) => !prev)}>
-              Reply
+            <FontAwesomeIcon icon={faReply} />
             </button>
           </div>
 
           <div className="buttons delete">
-            <button className="btns">Delete</button>
+            <button className="btns"><FontAwesomeIcon icon={faTrash} onClick={deleteComment}/></button>
+            <button className="btns"><FontAwesomeIcon icon={faPen} onClick={() => setIsEditing(prev => !prev)}/></button>
           </div>
         </div>
       </div>
@@ -56,7 +134,7 @@ export default function Comment({ comment }) {
           parentId={comment.uid}
         />
       )}
-
+      {isEditing && <EditBox comment={comment} />}
       <div className="children">
         {children &&
           children.map((child) => (
