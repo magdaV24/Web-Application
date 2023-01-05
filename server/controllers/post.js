@@ -19,9 +19,15 @@ export const getPost = (req, res) => {
   });
 };
 
-// export const deletePost = (req, res) => {
+export const deletePost = (req, res) => {
+  const id = req.params.id;
+  const q = `DELETE FROM posts WHERE id = ${id}`;
 
-// }
+  db.query(q, id, (err, result)=>{
+    if(err) throw err
+    res.send('Post has been deleted!')
+  })
+}
 
 export const editPost = (req, res) => {
 
@@ -32,6 +38,21 @@ export const editPost = (req, res) => {
   const content = req.body.content;
 
   db.query(q, [title, content], (err, result) => {
+    if (err) throw err;
+    res.send("The new values had been sent to the database!");
+  });
+};
+
+
+export const likeDislikePost = (req, res) => {
+
+  const id = req.params.id;
+  const q = `UPDATE posts SET likes = ?, dislikes = ? WHERE id = ${id}`;
+
+  const likes = req.body.likes;
+  const dislikes = req.body.dislikes;
+
+  db.query(q, [likes, dislikes], (err, result) => {
     if (err) throw err;
     res.send("The new values had been sent to the database!");
   });
