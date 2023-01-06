@@ -8,7 +8,7 @@ import { faRightFromBracket, faPlus } from "@fortawesome/free-solid-svg-icons";
 export default function Header() {
   const { currentUser, logout } = useContext(AuthContext);
   const logo =
-    "https://document-export.canva.com/hiINk/DAFWOkhiINk/5/thumbnail/0001.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHWDTJW6UD%2F20221229%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221229T104621Z&X-Amz-Expires=91497&X-Amz-Signature=658bd185e38d0769a1cf86fdb2ee2b38de77fa705c24bc701789f421b870316c&X-Amz-SignedHeaders=host&response-expires=Fri%2C%2030%20Dec%202022%2012%3A11%3A18%20GMT";
+    "https://document-export.canva.com/hiINk/DAFWOkhiINk/6/thumbnail/0001.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHWDTJW6UD%2F20230105%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230105T221501Z&X-Amz-Expires=45810&X-Amz-Signature=b62fbd090619591a5faee815720c3ee8846266ce97e4345ac722a5591c0a049c&X-Amz-SignedHeaders=host&response-expires=Fri%2C%2006%20Jan%202023%2010%3A58%3A31%20GMT";
   const source =
     "https://images.pexels.com/photos/207353/pexels-photo-207353.jpeg?auto=compress&cs=tinysrgb&w=600";
 

@@ -101,7 +101,88 @@ export default function Comment({ comment }) {
         }
       }
     }
+
+    //liking comments
+
+    const likeComment = async (comment, e) => {
+      e.preventDefault();
+      
+      let likes = comment.likes;
+      let dislikes = comment.dislikes;
+      likes = likes + 1;
+      console.log(comment.dislikedBy);
+
+      const id = comment.id;
+
+      if(comment.parentId === null){
+        try {
+          const response = await axios.put(
+            `http://localhost:3001/server/comment/${id}`,
+            {
+              likes: likes,
+              dislikes: dislikes,
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const response = await axios.put(
+            `http://localhost:3001/server/child/${id}`,
+            {
+              likes: likes,
+              dislikes: dislikes,
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
     
+    
+    //disliking comments
+
+    const dislikeComment = async (comment, e) => {
+      e.preventDefault();
+      
+      let likes = comment.likes;
+      let dislikes = comment.dislikes;
+      dislikes = dislikes + 1;
+
+      const id = comment.id;
+
+      if(comment.parentId === null){
+        try {
+          const response = await axios.put(
+            `http://localhost:3001/server/comment/${id}`,
+            {
+              likes: likes,
+              dislikes: dislikes,
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const response = await axios.put(
+            `http://localhost:3001/server/child/${id}`,
+            {
+              likes: likes,
+              dislikes: dislikes,
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
   return (
     <>
       <div className="comment-wrapper">
@@ -113,8 +194,8 @@ export default function Comment({ comment }) {
         </div>
         <div className="comment-actions">
           <div className="buttons">
-            <button className="btns" style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}><FontAwesomeIcon icon={faThumbsUp} /><span>{comment.likes}</span></button>
-            <button className="btns" style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}><FontAwesomeIcon icon={faThumbsDown} /><span>{comment.dislikes}</span></button>
+            <button className="btns" onClick={(e) => likeComment(comment, e)} style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}><FontAwesomeIcon icon={faThumbsUp} /><span>{comment.likes}</span></button>
+            <button className="btns" onClick={(e) => dislikeComment(comment, e)} style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}><FontAwesomeIcon icon={faThumbsDown} /><span>{comment.dislikes}</span></button>
             <button className="btns" onClick={() => setIsReplaying((prev) => !prev)}>
             <FontAwesomeIcon icon={faReply} />
             </button>
