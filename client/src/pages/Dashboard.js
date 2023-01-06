@@ -4,7 +4,6 @@ import Userbar from "../Components/Userbar";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCommentDots,
   faHeart,
   faHeartCrack,
 } from "@fortawesome/free-solid-svg-icons";
@@ -62,16 +61,10 @@ export default function Dashbord() {
                     </p>
                     <p>{post.dislikes}</p>
                   </div>
-                  <div className="dash-btn">
-                    <p>
-                      <FontAwesomeIcon icon={faCommentDots} />
-                    </p>
-                    <p>{post.replies}</p>
-                  </div>
+                  
                 </div>
                 <div className="dash-buttons">
                   <Link to={`/post/${post.id}`}>Read More</Link>
-                  <Link to="/">Delete</Link>
                 </div>
               </div>
             </div>
